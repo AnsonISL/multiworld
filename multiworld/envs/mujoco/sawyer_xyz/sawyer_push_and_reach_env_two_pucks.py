@@ -190,10 +190,18 @@ class SawyerPushAndReachXYZDoublePuckEnv(MultitaskEnv, SawyerXYZEnv):
         if self._always_start_on_same_side:
             return np.array([-.1, 0.6]), np.array([0.1, 0.6])
         else:
-            if np.random.randint(0, 2) == 0:
-                return np.array([0.1, 0.6]), np.array([-.1, 0.6])
-            else:
-                return np.array([-.1, 0.6]), np.array([0.1, 0.6])
+            # if np.random.randint(0, 2) == 0:
+            #     return np.array([0.1, 0.6]), np.array([-.1, 0.6])
+            # else:
+            #     return np.array([-.1, 0.6]), np.array([0.1, 0.6])
+            centre = np.array([0, 0.6])
+            collide = True
+            while collide:
+                puck1_pos = np.random.uniform([0.2,0.2],[-0.2,-0.2])
+                puck2_pos = np.random.uniform([0.2,0.2],[-0.2,-0.2])
+                collide = (np.linalg.norm(puck1_pos-puck2_pos) < 0.15)
+            return centre+puck1_pos, centre+puck2_pos
+
 
     def _set_goal_marker(self, goal):
         """
@@ -224,12 +232,12 @@ class SawyerPushAndReachXYZDoublePuckEnv(MultitaskEnv, SawyerXYZEnv):
         pos1, pos2 = puck_xys
         qpos = self.data.qpos.flat.copy()
         qvel = self.data.qvel.flat.copy()
-        qpos[7:10] = np.hstack((pos1.copy(), np.array([self.init_puck_z])))
-        qpos[10:14] = np.array([1, 0, 0, 0])
+        qpos[8:11] = np.hstack((pos1.copy(), np.array([self.init_puck_z])))
+        qpos[11:15] = np.array([1, 0, 0, 0])
 
-        qpos[14:17] = np.hstack((pos2.copy(), np.array([self.init_puck_z])))
-        qpos[17:21] = np.array([1, 0, 0, 0])
-        qvel[14:21] = 0
+        qpos[15:18] = np.hstack((pos2.copy(), np.array([self.init_puck_z])))
+        qpos[18:22] = np.array([1, 0, 0, 0])
+        qvel[15:22] = 0
         self.set_state(qpos, qvel)
 
     def reset_model(self):
@@ -406,7 +414,10 @@ class SawyerPushAndReachXYZDoublePuckEnv(MultitaskEnv, SawyerXYZEnv):
 
     def get_env_state(self):
         base_state = super().get_env_state()
-        goal = self._state_goal.copy()
+        if self._state_goal is not None:
+            goal = self._state_goal.copy()
+        else:
+            goal = None
         return base_state, goal
 
     def set_env_state(self, state):

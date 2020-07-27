@@ -23,6 +23,12 @@ def register_sawyer_envs():
 
 def register_canonical_sawyer_envs():
     register(
+        id='SawyerDouble-v0',
+        entry_point='multiworld.envs.mujoco.sawyer_xyz'
+                    '.sawyer_push_and_reach_env_two_pucks:SawyerPushAndReachXYDoublePuckEnv'
+    )
+
+    register(
         id='SawyerPush-v0',
         entry_point='multiworld.envs.mujoco.sawyer_xyz'
                     '.sawyer_push_nips:SawyerPushAndReachXYEasyEnv',
