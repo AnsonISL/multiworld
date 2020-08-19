@@ -39,6 +39,7 @@ Usage:
             integrator="Euler"
             timestep="0.002"
             cone="elliptic"
+            collision="all"
     />
 
     <default>
