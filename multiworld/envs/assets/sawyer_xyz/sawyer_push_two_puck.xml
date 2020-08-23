@@ -12,7 +12,7 @@
                   size="0.07 0.02"
                   rgba=".1 .1 .9 1"
                   contype="2"
-                  conaffinity="4"
+                  conaffinity="2"
                   friction=".1 .005 .0001"
             />
             <site name="puck1" pos="0 0 0" size="0.01" />
@@ -27,7 +27,7 @@
                   size="0.07 0.02"
                   rgba=".1 .9 .1 1"
                   contype="2"
-                  conaffinity="4"
+                  conaffinity="2"
                   friction=".1 .005 .0001"
             />
             <site name="puck2" pos="0 0 0" size="0.01" />

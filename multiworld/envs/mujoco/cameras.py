@@ -200,7 +200,7 @@ def sawyer_init_camera_zoomed_in(camera):
     #cam_pos = np.array([0, 0.5, 0.2, cam_dist, -45, rotation_angle])
 
     # 3rd person view
-    cam_dist = 0.5
+    cam_dist = 0.3
     rotation_angle = 270
     cam_pos = np.array([0, 0.85, 0.2, cam_dist, -45, rotation_angle])
 

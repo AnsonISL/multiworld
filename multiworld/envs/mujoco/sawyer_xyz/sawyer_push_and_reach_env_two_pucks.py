@@ -194,11 +194,11 @@ class SawyerPushAndReachXYZDoublePuckEnv(MultitaskEnv, SawyerXYZEnv):
             #     return np.array([0.1, 0.6]), np.array([-.1, 0.6])
             # else:
             #     return np.array([-.1, 0.6]), np.array([0.1, 0.6])
-            centre = np.array([0, 0.6])
+            centre = np.array([0, 0.65])
             collide = True
             while collide:
-                puck1_pos = np.random.uniform([0.2,0.2],[-0.2,-0.2])
-                puck2_pos = np.random.uniform([0.2,0.2],[-0.2,-0.2])
+                puck1_pos = np.random.uniform([0.1,0.1],[-0.1,-0.1])
+                puck2_pos = np.random.uniform([0.1,0.1],[-0.1,-0.1])
                 collide = (np.linalg.norm(puck1_pos-puck2_pos) < 0.15)
             return centre+puck1_pos, centre+puck2_pos
 
@@ -371,6 +371,8 @@ class SawyerPushAndReachXYZDoublePuckEnv(MultitaskEnv, SawyerXYZEnv):
             r = -puck2_distances
         elif self.reward_type == 'puck2_success':
             r = -(puck2_distances > self.indicator_threshold).astype(float)
+        elif self.reward_type == 'pucks_distance':
+            r = - puck1_distances - puck2_distances
         elif self.reward_type == 'state_distance':
             r = -np.linalg.norm(
                 achieved_goals - desired_goals,
@@ -424,7 +426,7 @@ class SawyerPushAndReachXYZDoublePuckEnv(MultitaskEnv, SawyerXYZEnv):
         base_state, goal = state
         super().set_env_state(base_state)
         self._state_goal = goal
-        self._set_goal_marker(goal)
+        # self._set_goal_marker(goal)
 
 
 class SawyerPushAndReachXYDoublePuckEnv(SawyerPushAndReachXYZDoublePuckEnv):
